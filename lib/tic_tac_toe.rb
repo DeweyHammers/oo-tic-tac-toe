@@ -1,5 +1,5 @@
 class TicTacToe
-
+    
     WIN_COMBINATIONS = [
         [0,1,2], # Top row
         [3,4,5], # Middle row
@@ -24,7 +24,45 @@ class TicTacToe
     end
 
     def input_to_index(input)
+        input = input.to_i
         input -= 1
-        @board[input]
+    end
+
+    def move(index, token)
+        @board[index] = token
+    end
+
+    def position_taken?(index)
+        /[XO]/.match(@board[index]) ? true : false
+    end
+
+    def valid_move?(index)
+        if 9 > index && index > -1
+            position_taken?(index) ? false : true
+        end
+    end
+
+    def turn_count
+        @board.join("").split.length
+    end
+
+    def current_player
+        turn_count.odd? ? "O" : "X"
+    end
+
+    def turn 
+        print "Please enter 1-9: "
+        user_input = gets.chomp
+        input = input_to_index(user_input)
+        if valid_move?(input)  
+            @board[input] = current_player 
+            display_board
+        else
+            turn
+        end
+    end
+
+    def won?
+       
     end
 end
