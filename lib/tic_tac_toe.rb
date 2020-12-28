@@ -63,6 +63,14 @@ class TicTacToe
     end
 
     def won?
-       
+        board_compo = nil 
+        WIN_COMBINATIONS.map do |combo|
+          if @board[combo[0]] == "X" && @board[combo[1]] == "X" && @board[combo[2]] == "X"
+            board_compo = combo
+          elsif @board[combo[0]] == "O" && @board[combo[1]] == "O" && @board[combo[2]] == "O"
+            board_compo = combo
+          end
+        end
+        board_compo
     end
 end
