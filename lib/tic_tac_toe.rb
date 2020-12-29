@@ -43,7 +43,7 @@ class TicTacToe
     end
 
     def turn_count
-        @board.join("").split.length
+        @board.join.gsub(" ", "").length
     end
 
     def current_player
@@ -65,12 +65,42 @@ class TicTacToe
     def won?
         board_compo = nil 
         WIN_COMBINATIONS.map do |combo|
-          if @board[combo[0]] == "X" && @board[combo[1]] == "X" && @board[combo[2]] == "X"
-            board_compo = combo
-          elsif @board[combo[0]] == "O" && @board[combo[1]] == "O" && @board[combo[2]] == "O"
-            board_compo = combo
-          end
+            if @board[combo[0]] == "X" && @board[combo[1]] == "X" && @board[combo[2]] == "X"
+                board_compo = combo
+            elsif @board[combo[0]] == "O" && @board[combo[1]] == "O" && @board[combo[2]] == "O"
+                board_compo = combo
+            end
         end
         board_compo
     end
+
+    def full?
+        /[XO]{9}/.match(@board.join).to_s.length == 9 ? true : false
+    end
+
+    def draw? 
+        if full?()
+            won?() ? false : true
+        end
+    end
+
+    def over?
+        won?() || draw?() ? true : false
+    end
+
+    def winner
+        if over?()
+            @board.join.gsub(" ", "").length.odd? ? "X" : "O"
+        end
+    end
+
+    def play
+        if over?() 
+            puts draw?() ? "Cat's Game!" : "Congratulations #{winner()}!"
+        else 
+            turn()
+            play()
+        end
+    end
 end
+
